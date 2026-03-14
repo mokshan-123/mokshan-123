@@ -1,3 +1,4 @@
+<p align="center" ><img  src = "https://github.com/7oSkaaa/7oSkaaa/blob/main/Images/about_me.gif?raw=true" width = 100px></p>
 <h1 align="center">Hi 👋, I'm Mokshan Colombage</h1>
 
 <h3 align="center">Signal Processing & Machine Learning Enthusiast | Biomedical Engineering Student</h3>
@@ -8,11 +9,27 @@
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 ## About me
+<table align="center">
+<tr border="none">
+<td width="50%" align="left">
+  
 - Bio Medical Engineering Undergraduate , University of Moratuwa - Sri Lanka
 
 - I’m currently learning **Audio, Image & Biomedical Signal Processing | Brain–Computer Interfaces**
 
 - How to reach me **dmcolombage18976@gmail.com**
+  
+
+</td>
+<td width="50%" align="center">
+
+  <img align="center" alt="Coding" width="450" src="https://repository-images.githubusercontent.com/588181932/e36ec678-7984-4cdd-8e4c-a3932772ff8e">
+
+  
+  </td>
+</tr>
+</table>
+
 
 [![](https://activity-graph.herokuapp.com/graph?username=mokshan-123&theme=tokyonight)](https://git.io/praveenscience)
 
