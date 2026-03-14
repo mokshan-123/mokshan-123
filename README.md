@@ -1,8 +1,10 @@
 <h1 align="center">Hi 👋, I'm Mokshan Colombage</h1>
 <h3 align="center">Signal Processing & Machine Learning Enthusiast | Biomedical Engineering Student</h3>
 
-<p align="center"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
 
+
+<p align="center"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 
 - I’m currently learning **Audio, Image & Biomedical Signal Processing | Brain–Computer Interfaces**
@@ -14,6 +16,9 @@
 | ![Aditya's github stats](https://github-readme-stats.vercel.app/api?username=mokshan-123&show_icons=true&theme=tokyonight) | ![Aditya GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=Aditya664&theme=tokyonight) |
 | --- | --- |
 | ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=mokshan-123&theme=tokyonight) | ![Github Stars](https://github-readme-stats.vercel.app/api?username=mokshan-123&show_icons=true&locale=en&count_private=true&hide_rank=true&custom_title=My%20GitHub%20Stats&disable_animations=true&theme=tokyonight) |
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+
 
 
 <h3 align="center">Connect with me:</h3>
