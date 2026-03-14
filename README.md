@@ -6,6 +6,8 @@
 <p align="center"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
+## About me
+- Bio Medical Engineering Undergraduate , University of Moratuwa - Sri Lanka
 
 - I’m currently learning **Audio, Image & Biomedical Signal Processing | Brain–Computer Interfaces**
 
