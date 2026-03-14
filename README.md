@@ -3,11 +3,11 @@
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
 
-<p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=mokshan-123" alt="mokshan-123" /></a> </p>
 
-- 🌱 I’m currently learning **Audio, Image & Biomedical Signal Processing | Brain–Computer Interfaces**
 
-- 📫 How to reach me **dmcolombage18976@gmail.com**
+- I’m currently learning **Audio, Image & Biomedical Signal Processing | Brain–Computer Interfaces**
+
+- How to reach me **dmcolombage18976@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
