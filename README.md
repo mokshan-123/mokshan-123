@@ -1,8 +1,7 @@
 <h1 align="center">Hi 👋, I'm Mokshan Colombage</h1>
 <h3 align="center">Signal Processing & Machine Learning Enthusiast | Biomedical Engineering Student</h3>
 
-
-<p align="center"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=mokshan-123" alt="mokshan-123" /></a> </p>
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
 
 - 🌱 I’m currently learning **Audio, Image & Biomedical Signal Processing | Brain–Computer Interfaces**
 
