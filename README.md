@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, I'm Mokshan Colombage</h1>
 <h3 align="center">Signal Processing & Machine Learning Enthusiast | Biomedical Engineering Student</h3>
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
+<p align="center"> <img src="https://komarev.com/ghpvc/?username=mokshan-123&label=Profile%20views&color=0e75b6&style=flat" alt="mokshan-123" /> </p>
 
 
 
