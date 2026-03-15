@@ -50,7 +50,7 @@
   <table>
     <tr>
       <td align="center" width="700">
-        <h3>🔬 Simulation Analysis of a Scintillator-Based Photon Counting CT System</h3>
+        <h3> Simulation Analysis of a Scintillator-Based Photon Counting CT System</h3>
         <p>
           <img src="https://img.shields.io/badge/Status-Ongoing-yellow?style=for-the-badge&logo=circle&logoColor=white" />
           <img src="https://img.shields.io/badge/Platform-Geant4-blue?style=for-the-badge" />
