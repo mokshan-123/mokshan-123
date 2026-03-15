@@ -40,8 +40,47 @@
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 ## Ongoing Projects
+<div align="center">
+  <a href="https://github.com/mokshan-123/Simulation-Analysis-of-a-Scintillator-Based-Photon-Counting-CT-System">
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=mokshan-123&repo=Simulation-Analysis-of-a-Scintillator-Based-Photon-Counting-CT-System&theme=tokyonight&show_owner=true" alt="Scintillator-Based PCCT Simulation" />
+  </a>
+</div>
+<br>
+<div align="center">
+  <table>
+    <tr>
+      <td align="center" width="700">
+        <h3>🔬 Simulation Analysis of a Scintillator-Based Photon Counting CT System</h3>
+        <p>
+          <img src="https://img.shields.io/badge/Status-Ongoing-yellow?style=for-the-badge&logo=circle&logoColor=white" />
+          <img src="https://img.shields.io/badge/Platform-Geant4-blue?style=for-the-badge" />
+          <img src="https://img.shields.io/badge/Language-C%2B%2B%20%7C%20Python-brightgreen?style=for-the-badge&logo=cplusplus&logoColor=white" />
+        </p>
+        <p align="left">
+          Simulating a <strong>scintillator-based photon-counting CT (PCCT)</strong> detector system using the <strong>Geant4</strong> Monte Carlo framework.
+          The project models X-ray photon interactions, scintillator crystal response, and SiPM-based signal readout to evaluate next-generation CT detector performance.
+        </p>
+        <p align="left">
+          <b>Key Focus Areas:</b><br>
+          &nbsp;&nbsp;• Detector geometry modeling (GAGG / GFAG scintillators + SiPM arrays)<br>
+          &nbsp;&nbsp;• Photon interaction simulation via Geant4 physics lists<br>
+          &nbsp;&nbsp;• CT projection data generation & sinogram analysis<br>
+          &nbsp;&nbsp;• Image reconstruction — FBP & iterative methods<br>
+          &nbsp;&nbsp;• Energy resolution, spatial resolution & noise characterization
+        </p>
+        <p align="left">
+          <b>Supervised by:</b> Dr. Rukshani Liyanarachchi — University of Moratuwa
+        </p>
+        <p>
+          <a href="https://github.com/mokshan-123/Simulation-Analysis-of-a-Scintillator-Based-Photon-Counting-CT-System">
+            <img src="https://img.shields.io/badge/View%20Repository-181717?style=for-the-badge&logo=github&logoColor=white" />
+          </a>
+        </p>
+      </td>
+    </tr>
+  </table>
+</div>
 
----
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 <h3 align="center">Connect with me:</h3>
