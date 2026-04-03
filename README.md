@@ -30,10 +30,11 @@
 </tr>
 </table>
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
+---
 
-
-[🔴 View my live stats →](https://mokshan-123.github.io/mokshan-123/)
+| ![](./assets/cards/card-profile.svg) | ![](./assets/cards/card-streak.svg) |
+| --- | --- |
+| ![](./assets/cards/card-stats.svg) | ![](./assets/cards/card-languages.svg) |
 ---
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
