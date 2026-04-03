@@ -1,0 +1,81 @@
+<svg width="495" height="195" viewBox="0 0 495 195" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="topbar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7aa2f7"/>
+      <stop offset="100%" style="stop-color:#7dcfff"/>
+    </linearGradient>
+    <linearGradient id="commitbar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7aa2f7"/>
+      <stop offset="100%" style="stop-color:#7dcfff"/>
+    </linearGradient>
+    <linearGradient id="prbar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#bb9af7"/>
+      <stop offset="100%" style="stop-color:#7aa2f7"/>
+    </linearGradient>
+    <linearGradient id="starbar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e0af68"/>
+      <stop offset="100%" style="stop-color:#ff9e64"/>
+    </linearGradient>
+    <linearGradient id="repobar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9ece6a"/>
+      <stop offset="100%" style="stop-color:#7dcfff"/>
+    </linearGradient>
+    <clipPath id="clip-commit"><rect x="0" y="0" width="152" height="8" rx="4"/></clipPath>
+    <clipPath id="clip-pr"><rect x="0" y="0" width="152" height="8" rx="4"/></clipPath>
+    <clipPath id="clip-star"><rect x="0" y="0" width="152" height="8" rx="4"/></clipPath>
+    <clipPath id="clip-repo"><rect x="0" y="0" width="152" height="8" rx="4"/></clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="495" height="195" rx="12" fill="#1a1b2e"/>
+
+  <!-- Top accent bar -->
+  <rect width="495" height="3" rx="0" fill="url(#topbar)"/>
+  <rect width="495" height="3" rx="2" fill="url(#topbar)"/>
+
+  <!-- Border -->
+  <rect width="495" height="195" rx="12" fill="none" stroke="#0f3460" stroke-width="1"/>
+
+  <!-- GitHub icon -->
+  <path d="M26 16c-5.52 0-10 4.48-10 10 0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.52 1.02 1.52 1.02.89 1.52 2.32 1.08 2.89.82.09-.64.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.99 1.03-2.69-.1-.26-.45-1.28.1-2.67 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0126 23.6c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.39.2 2.41.1 2.67.64.7 1.03 1.6 1.03 2.69 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.86v2.76c0 .27.18.58.69.48A10.01 10.01 0 0036 26c0-5.52-4.48-10-10-10z" fill="#7aa2f7"/>
+
+  <!-- Title -->
+  <text x="47" y="30" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="15" font-weight="700" fill="#c0caf5">Mokshan's GitHub Stats</text>
+
+  <!-- Divider -->
+  <line x1="20" y1="44" x2="475" y2="44" stroke="#0f3460" stroke-width="1"/>
+
+  <!-- Left column: big stat -->
+  <text x="20" y="75" font-family="'Segoe UI', Ubuntu, monospace" font-size="11" fill="#565f89">Total Contributions</text>
+  <text x="20" y="105" font-family="'Segoe UI', Ubuntu, monospace" font-size="36" font-weight="700" fill="#7aa2f7">152</text>
+  <text x="20" y="122" font-family="'Segoe UI', Ubuntu, monospace" font-size="10" fill="#565f89">Jan 28, 2025 – Present</text>
+
+  <!-- Vertical divider -->
+  <line x1="200" y1="52" x2="200" y2="180" stroke="#0f3460" stroke-width="1"/>
+
+  <!-- Right column: bars -->
+  <!-- Commits -->
+  <text x="215" y="72" font-family="'Segoe UI', Ubuntu, monospace" font-size="11" fill="#565f89">Commits</text>
+  <rect x="215" y="77" width="152" height="8" rx="4" fill="#16213e"/>
+  <rect x="215" y="77" width="129" height="8" rx="4" fill="url(#commitbar)"/>
+  <text x="375" y="86" font-family="'Segoe UI', Ubuntu, monospace" font-size="10" fill="#7aa2f7" text-anchor="start">152</text>
+
+  <!-- PRs -->
+  <text x="215" y="108" font-family="'Segoe UI', Ubuntu, monospace" font-size="11" fill="#565f89">Pull Requests</text>
+  <rect x="215" y="113" width="152" height="8" rx="4" fill="#16213e"/>
+  <rect x="215" y="113" width="45" height="8" rx="4" fill="url(#prbar)"/>
+  <text x="375" y="122" font-family="'Segoe UI', Ubuntu, monospace" font-size="10" fill="#bb9af7" text-anchor="start">—</text>
+
+  <!-- Stars -->
+  <text x="215" y="144" font-family="'Segoe UI', Ubuntu, monospace" font-size="11" fill="#565f89">Stars Earned</text>
+  <rect x="215" y="149" width="152" height="8" rx="4" fill="#16213e"/>
+  <rect x="215" y="149" width="70" height="8" rx="4" fill="url(#starbar)"/>
+  <text x="375" y="158" font-family="'Segoe UI', Ubuntu, monospace" font-size="10" fill="#e0af68" text-anchor="start">—</text>
+
+  <!-- Repos -->
+  <text x="215" y="178" font-family="'Segoe UI', Ubuntu, monospace" font-size="11" fill="#565f89">Repositories</text>
+  <rect x="215" y="183" width="152" height="8" rx="4" fill="#16213e"/>
+
+  <!-- Bottom left label -->
+  <text x="20" y="175" font-family="'Segoe UI', Ubuntu, monospace" font-size="10" fill="#565f89">github.com/mokshan-123</text>
+</svg>
