@@ -32,9 +32,7 @@
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
-| ![](./assets/cards/card-profile.svg) | ![](./assets/cards/card-streak.svg) |
-| --- | --- |
-| ![](./assets/cards/card-stats.svg) | ![](./assets/cards/card-languages.svg) |
+
 
 ---
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
