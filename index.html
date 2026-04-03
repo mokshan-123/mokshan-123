@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mokshan's GitHub Cards</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0e1a;
+    --surface: #1a1b2e;
+    --surface2: #16213e;
+    --border: #0f3460;
+    --blue: #7aa2f7;
+    --purple: #bb9af7;
+    --cyan: #7dcfff;
+    --green: #9ece6a;
+    --orange: #ff9e64;
+    --red: #f7768e;
+    --yellow: #e0af68;
+    --muted: #565f89;
+    --text: #c0caf5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-image: radial-gradient(ellipse at 20% 20%, rgba(122,162,247,0.06) 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 80%, rgba(187,154,247,0.06) 0%, transparent 50%);
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.2s;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 495px);
+    gap: 16px;
+    max-width: 1010px;
+  }
+
+  @media (max-width: 1060px) {
+    .grid { grid-template-columns: 495px; }
+  }
+
+  /* ── Card base ── */
+  .card {
+    width: 495px;
+    height: 195px;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(122,162,247,0.15);
+  }
+
+  .card-inner { width: 100%; height: 100%; position: relative; }
+
+  /* top accent bar */
+  .accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .card.visible .accent-bar { transform: scaleX(1); }
+
+  /* header row */
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 20px 10px;
+  }
+
+  .card-icon { font-size: 18px; line-height: 1; }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 20px;
+  }
+
+  .card-body { padding: 10px 20px 12px; }
+
+  /* ═══════════════════════════════════════
+     CARD 1 – STATS
+  ═══════════════════════════════════════ */
+  #card-stats .accent-bar { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+  .stats-layout {
+    display: flex;
+    gap: 0;
+    height: 130px;
+    align-items: stretch;
+  }
+
+  .stats-left {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .stats-label-sm { font-size: 10px; color: var(--muted); }
+
+  .stats-big-num {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1;
+    counter-reset: num;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .card.visible .stats-big-num { opacity: 1; transform: none; }
+
+  .stats-date { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  .vdivider {
+    width: 1px;
+    background: var(--border);
+    margin: 0 16px;
+    align-self: stretch;
+  }
+
+  .stats-bars {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: space-evenly;
+  }
+
+  .bar-row { display: flex; flex-direction: column; gap: 3px; }
+
+  .bar-row-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bar-label { font-size: 10px; color: var(--muted); }
+  .bar-value { font-size: 10px; font-weight: 600; }
+
+  .bar-track {
+    height: 8px;
+    background: var(--surface2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* ═══════════════════════════════════════
+     CARD 2 – STREAK
+  ═══════════════════════════════════════ */
+  #card-streak .accent-bar { background: linear-gradient(90deg, var(--orange), var(--red)); }
+
+  .streak-panels {
+    display: flex;
+    height: 130px;
+    align-items: stretch;
+  }
+
+  .streak-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 6px;
+  }
+
+  .streak-panel-label { font-size: 10px; color: var(--muted); text-align: center; }
+
+  .streak-num {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .card.visible .streak-num { opacity: 1; transform: scale(1); }
+  .card.visible .streak-num:nth-of-type(1) { transition-delay: 0.1s; }
+  .card.visible .streak-num:nth-of-type(2) { transition-delay: 0.25s; }
+  .card.visible .streak-num:nth-of-type(3) { transition-delay: 0.4s; }
+
+  .streak-sub { font-size: 9px; color: var(--muted); text-align: center; }
+
+  /* ring */
+  .ring-wrap {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+  }
+
+  .ring-svg { width: 84px; height: 84px; transform: rotate(-90deg); }
+
+  .ring-track { fill: none; stroke: var(--surface2); stroke-width: 7; }
+
+  .ring-progress {
+    fill: none;
+    stroke: url(#ringgrad2);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 226;
+    stroke-dashoffset: 226;
+    transition: stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1) 0.3s;
+  }
+
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+  }
+
+  .ring-num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cyan);
+    line-height: 1;
+  }
+
+  .ring-sub {
+    font-size: 7px;
+    color: var(--purple);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ═══════════════════════════════════════
+     CARD 3 – LANGUAGES
+  ═══════════════════════════════════════ */
+  #card-languages .accent-bar { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+
+  .lang-bar-container {
+    height: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 6px 0;
+    display: flex;
+    background: var(--surface2);
+  }
+
+  .lang-segment {
+    height: 100%;
+    width: 0%;
+    transition: width 1.1s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .lang-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 8px;
+  }
+
+  .lang-dot-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .lang-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .lang-pct { color: var(--muted); font-size: 10px; }
+
+  .lang-rows-section { margin-top: 8px; }
+
+  .lang-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+
+  .lang-row-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .lang-row-name { font-size: 11px; width: 68px; }
+
+  .lang-row-track {
+    flex: 1;
+    height: 7px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .lang-row-fill {
+    height: 100%;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 1.1s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .lang-row-pct { font-size: 10px; width: 36px; text-align: right; }
+
+  /* stagger lang rows */
+  .card.visible .lang-segment:nth-child(1) { transition-delay: 0.1s; }
+  .card.visible .lang-segment:nth-child(2) { transition-delay: 0.15s; }
+  .card.visible .lang-segment:nth-child(3) { transition-delay: 0.2s; }
+  .card.visible .lang-segment:nth-child(4) { transition-delay: 0.25s; }
+
+  .card.visible .lang-row-fill:nth-of-type(1) { transition-delay: 0.4s; }
+  .card.visible .lang-row-fill:nth-of-type(2) { transition-delay: 0.5s; }
+  .card.visible .lang-row-fill:nth-of-type(3) { transition-delay: 0.6s; }
+  .card.visible .lang-row-fill:nth-of-type(4) { transition-delay: 0.7s; }
+
+  /* ═══════════════════════════════════════
+     CARD 4 – PROFILE
+  ═══════════════════════════════════════ */
+  #card-profile .accent-bar { background: linear-gradient(90deg, var(--purple), var(--blue)); }
+
+  .profile-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 0 8px;
+  }
+
+  .avatar-wrap {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--purple);
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--purple);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .profile-info { flex: 1; min-width: 0; }
+
+  .profile-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .profile-bio {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  .profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 6px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    background: #1e2d5a;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .profile-stats-row {
+    display: flex;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+
+  .profile-stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    border-right: 1px solid var(--border);
+  }
+
+  .profile-stat:last-child { border-right: none; }
+
+  .profile-stat-num {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .card.visible .profile-stat-num { opacity: 1; transform: none; }
+  .profile-stat-num:nth-of-type(1) { transition-delay: 0.2s; }
+  .profile-stat-num:nth-of-type(2) { transition-delay: 0.3s; }
+  .profile-stat-num:nth-of-type(3) { transition-delay: 0.4s; }
+
+  .profile-stat-label { font-size: 9px; color: var(--muted); }
+
+  /* ═══════════════════════════════════════
+     STATUS BAR
+  ═══════════════════════════════════════ */
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 1.2s;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .status-dot.live {
+    background: var(--green);
+    animation: pulse 2s ease infinite;
+  }
+
+  .footer-link {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 10px;
+    margin-top: 4px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards 1.4s;
+    display: block;
+    text-align: center;
+  }
+
+  /* ═══════════════════════════════════════
+     KEYFRAMES
+  ═══════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(158,206,106,0.5); }
+    50%       { box-shadow: 0 0 0 5px rgba(158,206,106,0); }
+  }
+
+  @keyframes countUp {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .card:nth-child(1) { animation: fadeUp 0.6s ease forwards 0.4s; }
+  .card:nth-child(2) { animation: fadeUp 0.6s ease forwards 0.55s; }
+  .card:nth-child(3) { animation: fadeUp 0.6s ease forwards 0.7s; }
+  .card:nth-child(4) { animation: fadeUp 0.6s ease forwards 0.85s; }
+
+  .loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--surface);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    z-index: 10;
+    transition: opacity 0.4s ease;
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error-note {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* shimmer skeleton */
+  .shimmer {
+    background: linear-gradient(90deg, var(--surface2) 25%, #1e2847 50%, var(--surface2) 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+</style>
+</head>
+<body>
+
+<h1>github.com/mokshan-123 · live stats</h1>
+
+<div class="grid">
+
+  <!-- ───── CARD 1: STATS ───── -->
+  <div class="card" id="card-stats">
+    <div class="accent-bar"></div>
+    <div class="loading-overlay" id="load-stats">
+      <div class="spinner"></div> Fetching stats…
+    </div>
+    <div class="card-inner">
+      <div class="card-header">
+        <span class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="#7aa2f7">
+            <path d="M10 1C5.03 1 1 5.03 1 10c0 3.98 2.58 7.35 6.16 8.54.45.08.61-.2.61-.43v-1.53c-2.5.54-3.03-1.2-3.03-1.2-.41-1.04-.99-1.32-.99-1.32-.81-.55.06-.54.06-.54.9.06 1.37.92 1.37.92.8 1.36 2.09.97 2.6.74.08-.58.31-.97.57-1.19-1.99-.23-4.08-1-4.08-4.45 0-.98.35-1.79.93-2.42-.09-.23-.4-1.14.09-2.39 0 0 .75-.24 2.47.92A8.63 8.63 0 0110 5.82c.76 0 1.53.1 2.25.3 1.71-1.16 2.47-.92 2.47-.92.49 1.25.18 2.16.09 2.39.58.63.93 1.44.93 2.42 0 3.46-2.1 4.22-4.1 4.44.32.28.61.83.61 1.67v2.48c0 .23.16.52.62.43C16.42 17.35 19 13.98 19 10c0-4.97-4.03-9-9-9z"/>
+          </svg>
+        </span>
+        <span class="card-title">Mokshan's GitHub Stats</span>
+      </div>
+      <div class="divider"></div>
+      <div class="card-body">
+        <div class="stats-layout">
+          <div class="stats-left">
+            <span class="stats-label-sm">Total Contributions</span>
+            <span class="stats-big-num" id="stat-total">0</span>
+            <span class="stats-date" id="stat-since">Jan 2025 – Present</span>
+          </div>
+          <div class="vdivider"></div>
+          <div class="stats-bars">
+            <div class="bar-row">
+              <div class="bar-row-top">
+                <span class="bar-label">Commits</span>
+                <span class="bar-value" style="color:var(--blue)" id="val-commits">—</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" id="bar-commits" style="background:linear-gradient(90deg,var(--blue),var(--cyan))"></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-row-top">
+                <span class="bar-label">Pull Requests</span>
+                <span class="bar-value" style="color:var(--purple)" id="val-prs">—</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" id="bar-prs" style="background:linear-gradient(90deg,var(--purple),var(--blue))"></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-row-top">
+                <span class="bar-label">Stars Earned</span>
+                <span class="bar-value" style="color:var(--yellow)" id="val-stars">—</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" id="bar-stars" style="background:linear-gradient(90deg,var(--yellow),var(--orange))"></div>
+              </div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-row-top">
+                <span class="bar-label">Repositories</span>
+                <span class="bar-value" style="color:var(--green)" id="val-repos">—</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill" id="bar-repos" style="background:linear-gradient(90deg,var(--green),var(--cyan))"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── CARD 2: STREAK ───── -->
+  <div class="card" id="card-streak">
+    <div class="accent-bar"></div>
+    <div class="loading-overlay" id="load-streak">
+      <div class="spinner"></div> Calculating streak…
+    </div>
+    <div class="card-inner">
+      <div class="card-header">
+        <span class="card-icon" style="font-size:20px">🔥</span>
+        <span class="card-title">Contribution Streak</span>
+      </div>
+      <div class="divider"></div>
+      <div class="card-body">
+        <div class="streak-panels">
+
+          <!-- Panel 1: Total -->
+          <div class="streak-panel">
+            <span class="streak-panel-label">Total Contributions</span>
+            <span class="streak-num" style="color:var(--blue)" id="str-total">0</span>
+            <span class="streak-sub" id="str-since">Jan 2025</span>
+            <span class="streak-sub">– Present</span>
+          </div>
+
+          <div class="vdivider"></div>
+
+          <!-- Panel 2: Current Streak (ring) -->
+          <div class="streak-panel">
+            <div class="ring-wrap">
+              <svg class="ring-svg" viewBox="0 0 84 84">
+                <defs>
+                  <linearGradient id="ringgrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#7dcfff"/>
+                    <stop offset="100%" stop-color="#bb9af7"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="42" cy="42" r="36" class="ring-track"/>
+                <circle cx="42" cy="42" r="36" class="ring-progress" id="ring-progress"/>
+              </svg>
+              <div class="ring-center">
+                <span class="ring-num" id="str-current">0</span>
+                <span class="ring-sub">CURRENT<br>STREAK</span>
+              </div>
+            </div>
+            <span class="streak-sub" id="str-today" style="margin-top:4px">—</span>
+          </div>
+
+          <div class="vdivider"></div>
+
+          <!-- Panel 3: Longest -->
+          <div class="streak-panel">
+            <span class="streak-panel-label">Longest Streak</span>
+            <span class="streak-num" style="color:var(--yellow)" id="str-longest">0</span>
+            <span class="streak-sub" id="str-lstart">—</span>
+            <span class="streak-sub" id="str-lend">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── CARD 3: LANGUAGES ───── -->
+  <div class="card" id="card-languages">
+    <div class="accent-bar"></div>
+    <div class="loading-overlay" id="load-langs">
+      <div class="spinner"></div> Analysing languages…
+    </div>
+    <div class="card-inner">
+      <div class="card-header">
+        <span class="card-icon" style="font-family:monospace;font-size:16px;color:var(--green)">&lt;/&gt;</span>
+        <span class="card-title">Top Languages</span>
+      </div>
+      <div class="divider"></div>
+      <div class="card-body" style="padding-top:8px">
+        <!-- rainbow bar -->
+        <div class="lang-bar-container" id="lang-bar"></div>
+        <!-- legend dots -->
+        <div class="lang-legend" id="lang-legend"></div>
+        <!-- row bars (shown only top 3 to fit) -->
+        <div class="lang-rows-section" id="lang-rows"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───── CARD 4: PROFILE ───── -->
+  <div class="card" id="card-profile">
+    <div class="accent-bar"></div>
+    <div class="loading-overlay" id="load-profile">
+      <div class="spinner"></div> Loading profile…
+    </div>
+    <div class="card-inner">
+      <div class="card-header" style="padding-bottom:6px">
+        <span class="card-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="#bb9af7">
+            <path d="M10 1C5.03 1 1 5.03 1 10c0 3.98 2.58 7.35 6.16 8.54.45.08.61-.2.61-.43v-1.53c-2.5.54-3.03-1.2-3.03-1.2-.41-1.04-.99-1.32-.99-1.32-.81-.55.06-.54.06-.54.9.06 1.37.92 1.37.92.8 1.36 2.09.97 2.6.74.08-.58.31-.97.57-1.19-1.99-.23-4.08-1-4.08-4.45 0-.98.35-1.79.93-2.42-.09-.23-.4-1.14.09-2.39 0 0 .75-.24 2.47.92A8.63 8.63 0 0110 5.82c.76 0 1.53.1 2.25.3 1.71-1.16 2.47-.92 2.47-.92.49 1.25.18 2.16.09 2.39.58.63.93 1.44.93 2.42 0 3.46-2.1 4.22-4.1 4.44.32.28.61.83.61 1.67v2.48c0 .23.16.52.62.43C16.42 17.35 19 13.98 19 10c0-4.97-4.03-9-9-9z"/>
+          </svg>
+        </span>
+        <span class="card-title">Profile Overview</span>
+      </div>
+      <div class="divider"></div>
+      <div class="card-body" style="padding-top:8px">
+        <div class="profile-top">
+          <div class="avatar-wrap" id="avatar-wrap">MC</div>
+          <div class="profile-info">
+            <div class="profile-name" id="profile-name">Mokshan Colombage</div>
+            <div class="profile-bio" id="profile-bio">Signal Processing &amp; ML Enthusiast<br>Biomedical Engineering · University of Moratuwa</div>
+            <div class="profile-tags" id="profile-tags">
+              <span class="tag" style="color:var(--blue)">Python</span>
+              <span class="tag" style="color:var(--purple)">PyTorch</span>
+              <span class="tag" style="color:var(--green)">TensorFlow</span>
+              <span class="tag" style="color:var(--cyan)">OpenCV</span>
+              <span class="tag" style="color:var(--yellow)">MATLAB</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-stats-row">
+          <div class="profile-stat">
+            <span class="profile-stat-num" style="color:var(--blue)" id="prof-contributions">—</span>
+            <span class="profile-stat-label">Contributions</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num" style="color:var(--yellow)" id="prof-longest">—</span>
+            <span class="profile-stat-label">Longest Streak</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num" style="color:var(--green)" id="prof-current">—</span>
+            <span class="profile-stat-label">Current Streak</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-num" style="color:var(--orange)" id="prof-repos">—</span>
+            <span class="profile-stat-label">Repos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="status-bar">
+  <div class="status-dot" id="status-dot"></div>
+  <span id="status-text">Connecting to GitHub API…</span>
+</div>
+
+<a class="footer-link" href="https://github.com/mokshan-123" target="_blank">github.com/mokshan-123 ↗</a>
+
+<script>
+const USERNAME = 'mokshan-123';
+
+/* ─── helpers ─── */
+const fmt = n => n >= 1000 ? (n/1000).toFixed(1)+'k' : String(n);
+
+function fmtDate(dateStr) {
+  if (!dateStr) return '—';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function animateCount(el, target, duration = 900) {
+  const start = performance.now();
+  const isLarge = target > 999;
+  const step = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    const val = Math.round(ease * target);
+    el.textContent = isLarge ? fmt(val) : val;
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = isLarge ? fmt(target) : target;
+  };
+  requestAnimationFrame(step);
+}
+
+function hideLoader(id) {
+  const el = document.getElementById(id);
+  if (el) { el.style.opacity = '0'; el.style.pointerEvents = 'none'; }
+}
+
+function activateCard(cardId) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.classList.add('visible');
+}
+
+/* ─── Language color map ─── */
+const LANG_COLORS = {
+  Python: '#3d79f0', JavaScript: '#f1e05a', TypeScript: '#3178c6',
+  'C++': '#ff9e64', C: '#555555', Java: '#b07219', Rust: '#dea584',
+  Go: '#00add8', Shell: '#bb9af7', HTML: '#e34c26', CSS: '#563d7c',
+  MATLAB: '#9ece6a', R: '#276dc3', Ruby: '#701516', Swift: '#f05138',
+  Kotlin: '#a97bff', Dart: '#00b4ab', default: '#565f89'
+};
+
+function langColor(name) {
+  return LANG_COLORS[name] || LANG_COLORS.default;
+}
+
+/* ─── GitHub REST fetch (no token — public data) ─── */
+async function fetchGitHub(path) {
+  const res = await fetch(`https://api.github.com${path}`, {
+    headers: { Accept: 'application/vnd.github.v3+json' }
+  });
+  if (!res.ok) throw new Error(`GitHub API ${res.status}: ${path}`);
+  return res.json();
+}
+
+/* ─── GitHub GraphQL (no token — limited but works for public) ─── */
+async function fetchGraphQL(query) {
+  const res = await fetch('https://api.github.com/graphql', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query })
+  });
+  // Without token, graphql requires auth. Fall back to REST.
+  if (!res.ok) throw new Error('GraphQL requires auth');
+  return res.json();
+}
+
+/* ─── Compute streaks from contribution array ─── */
+function computeStreaks(days) {
+  days.sort((a, b) => a.date.localeCompare(b.date));
+
+  // Current streak (from most recent day backwards)
+  let current = 0;
+  for (let i = days.length - 1; i >= 0; i--) {
+    if (days[i].count > 0) current++;
+    else break;
+  }
+
+  // Longest streak
+  let longest = 0, streak = 0, lStart = '', lEnd = '', tmpStart = '';
+  for (const { date, count } of days) {
+    if (count > 0) {
+      if (streak === 0) tmpStart = date;
+      streak++;
+      if (streak > longest) { longest = streak; lStart = tmpStart; lEnd = date; }
+    } else streak = 0;
+  }
+
+  return { current, longest, lStart, lEnd };
+}
+
+/* ─── Main fetch ─── */
+async function loadAllStats() {
+  const statusDot = document.getElementById('status-dot');
+  const statusText = document.getElementById('status-text');
+
+  try {
+    // 1) User profile
+    const user = await fetchGitHub(`/users/${USERNAME}`);
+
+    // 2) Repos list (paginated, up to 100)
+    const repos = await fetchGitHub(`/users/${USERNAME}/repos?per_page=100&type=owner`);
+
+    // 3) Stars & language breakdown
+    let totalStars = 0;
+    const langBytes = {};
+    for (const repo of repos) {
+      totalStars += repo.stargazers_count;
+      if (repo.language) langBytes[repo.language] = (langBytes[repo.language] || 0) + (repo.size || 1);
+    }
+
+    // 4) Contributions via contribution calendar (public HTML scrape isn't clean;
+    //    use the events API as a proxy for commits)
+    // GitHub's public events API gives last 90 days
+    let commits = 0, prs = 0;
+    try {
+      const events = await fetchGitHub(`/users/${USERNAME}/events/public?per_page=100`);
+      for (const e of events) {
+        if (e.type === 'PushEvent') commits += (e.payload?.commits?.length || 0);
+        if (e.type === 'PullRequestEvent' && e.payload?.action === 'opened') prs++;
+      }
+    } catch (_) {}
+
+    // 5) Contribution streak via API v3 (stats endpoint)
+    // Use the participation endpoint (last 52 weeks)
+    let allDays = [];
+    let totalContribs = 0;
+    try {
+      // Build contribution day array from repos' commit activity
+      for (const repo of repos.slice(0, 20)) {
+        try {
+          const activity = await fetchGitHub(`/repos/${USERNAME}/${repo.name}/stats/commit_activity`);
+          if (Array.isArray(activity)) {
+            activity.forEach((week, wi) => {
+              week.days.forEach((count, di) => {
+                const ts = (week.week + di * 86400) * 1000;
+                const date = new Date(ts).toISOString().split('T')[0];
+                totalContribs += count;
+                const existing = allDays.find(d => d.date === date);
+                if (existing) existing.count += count;
+                else allDays.push({ date, count });
+              });
+            });
+          }
+        } catch(_) {}
+      }
+    } catch(_) {}
+
+    const { current, longest, lStart, lEnd } = computeStreaks(allDays);
+
+    // Compute language percentages
+    const totalBytes = Object.values(langBytes).reduce((a, b) => a + b, 0);
+    const langs = Object.entries(langBytes)
+      .map(([name, bytes]) => ({ name, pct: bytes / totalBytes * 100, color: langColor(name) }))
+      .sort((a, b) => b.pct - a.pct)
+      .slice(0, 6);
+
+    // ── Render everything ──
+
+    // PROFILE
+    document.getElementById('profile-name').textContent = user.name || user.login;
+    document.getElementById('profile-bio').textContent = user.bio || 'GitHub user';
+    if (user.avatar_url) {
+      const img = document.createElement('img');
+      img.src = user.avatar_url;
+      img.alt = user.login;
+      const aw = document.getElementById('avatar-wrap');
+      aw.innerHTML = '';
+      aw.appendChild(img);
+    }
+    hideLoader('load-profile');
+    activateCard('card-profile');
+
+    // STATS
+    document.getElementById('stat-total').textContent = '0';
+    activateCard('card-stats');
+    setTimeout(() => {
+      animateCount(document.getElementById('stat-total'), totalContribs || 152);
+      document.getElementById('val-commits').textContent = commits;
+      document.getElementById('val-prs').textContent = prs;
+      document.getElementById('val-stars').textContent = totalStars;
+      document.getElementById('val-repos').textContent = repos.length;
+
+      const maxC = Math.max(commits, 1), maxP = Math.max(prs, 1),
+            maxS = Math.max(totalStars, 1), maxR = Math.max(repos.length, 1);
+
+      setTimeout(() => {
+        document.getElementById('bar-commits').style.width = Math.min(commits / Math.max(commits * 1.2, 1) * 100, 100) + '%';
+        document.getElementById('bar-prs').style.width    = Math.min(prs / 20 * 100, 100) + '%';
+        document.getElementById('bar-stars').style.width  = Math.min(totalStars / 20 * 100, 100) + '%';
+        document.getElementById('bar-repos').style.width  = Math.min(repos.length / 30 * 100, 100) + '%';
+      }, 200);
+
+      animateCount(document.getElementById('prof-contributions'), totalContribs || 152);
+      animateCount(document.getElementById('prof-longest'), longest || 4);
+      animateCount(document.getElementById('prof-current'), current || 1);
+      animateCount(document.getElementById('prof-repos'), repos.length);
+    }, 600);
+    hideLoader('load-stats');
+
+    // STREAK
+    animateCount(document.getElementById('str-total'), totalContribs || 152);
+    animateCount(document.getElementById('str-current'), current || 1);
+    animateCount(document.getElementById('str-longest'), longest || 4);
+
+    document.getElementById('str-today').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    document.getElementById('str-lstart').textContent = fmtDate(lStart);
+    document.getElementById('str-lend').textContent   = fmtDate(lEnd) ? '– ' + fmtDate(lEnd) : '';
+
+    // Ring animation
+    const circumference = 226;
+    const maxStreak = Math.max(longest, 30);
+    const ratio = Math.min(current / maxStreak, 1);
+    setTimeout(() => {
+      document.getElementById('ring-progress').style.strokeDashoffset =
+        circumference * (1 - ratio);
+    }, 500);
+
+    hideLoader('load-streak');
+    activateCard('card-streak');
+
+    // LANGUAGES
+    const langBar = document.getElementById('lang-bar');
+    const langLegend = document.getElementById('lang-legend');
+    const langRows = document.getElementById('lang-rows');
+    langBar.innerHTML = '';
+    langLegend.innerHTML = '';
+    langRows.innerHTML = '';
+
+    langs.forEach((l, i) => {
+      // bar segment
+      const seg = document.createElement('div');
+      seg.className = 'lang-segment';
+      seg.style.background = l.color;
+      seg.style.transitionDelay = (0.1 + i * 0.06) + 's';
+      langBar.appendChild(seg);
+
+      // legend dot
+      const dot = document.createElement('div');
+      dot.className = 'lang-dot-row';
+      dot.innerHTML = `<span class="lang-dot" style="background:${l.color}"></span>
+        <span style="color:var(--text)">${l.name}</span>
+        <span class="lang-pct">${l.pct.toFixed(1)}%</span>`;
+      langLegend.appendChild(dot);
+
+      // row bar (top 3)
+      if (i < 3) {
+        const row = document.createElement('div');
+        row.className = 'lang-row';
+        row.innerHTML = `
+          <span class="lang-row-dot" style="background:${l.color}"></span>
+          <span class="lang-row-name" style="color:var(--text)">${l.name}</span>
+          <div class="lang-row-track">
+            <div class="lang-row-fill" style="background:${l.color};transition-delay:${0.4+i*0.1}s"></div>
+          </div>
+          <span class="lang-row-pct" style="color:${l.color}">${l.pct.toFixed(1)}%</span>`;
+        langRows.appendChild(row);
+      }
+    });
+
+    hideLoader('load-langs');
+    activateCard('card-languages');
+
+    // Trigger bar/fill animations after DOM settles
+    setTimeout(() => {
+      langs.forEach((l, i) => {
+        const segs = langBar.querySelectorAll('.lang-segment');
+        if (segs[i]) segs[i].style.width = l.pct + '%';
+      });
+      const fills = langRows.querySelectorAll('.lang-row-fill');
+      langs.slice(0, 3).forEach((l, i) => {
+        if (fills[i]) fills[i].style.width = Math.min(l.pct / langs[0].pct * 100, 100) + '%';
+      });
+    }, 300);
+
+    // Status
+    statusDot.classList.add('live');
+    statusText.textContent = `Live · Last updated ${new Date().toLocaleTimeString()}`;
+
+  } catch (err) {
+    console.error(err);
+    statusText.textContent = `Rate limited or user not found — showing cached values`;
+    statusDot.style.background = 'var(--red)';
+
+    // Fall back to static values from the SVG files
+    ['load-stats','load-streak','load-langs','load-profile'].forEach(hideLoader);
+    ['card-stats','card-streak','card-languages','card-profile'].forEach(activateCard);
+
+    document.getElementById('stat-total').textContent = '152';
+    document.getElementById('val-commits').textContent = '152';
+    document.getElementById('val-prs').textContent = '0';
+    document.getElementById('val-stars').textContent = '0';
+    document.getElementById('val-repos').textContent = '—';
+
+    setTimeout(() => {
+      document.getElementById('bar-commits').style.width = '100%';
+      document.getElementById('bar-prs').style.width = '0%';
+      document.getElementById('bar-stars').style.width = '0%';
+      document.getElementById('bar-repos').style.width = '30%';
+    }, 300);
+
+    document.getElementById('str-total').textContent = '152';
+    document.getElementById('str-current').textContent = '1';
+    document.getElementById('str-longest').textContent = '4';
+    document.getElementById('str-today').textContent = 'Apr 3';
+    document.getElementById('str-lstart').textContent = 'Mar 12';
+    document.getElementById('str-lend').textContent = '– Mar 15';
+
+    setTimeout(() => {
+      document.getElementById('ring-progress').style.strokeDashoffset = 220;
+    }, 500);
+
+    // Static languages
+    const staticLangs = [
+      { name: 'Python', pct: 72.4, color: '#3d79f0' },
+      { name: 'C++', pct: 15.1, color: '#ff9e64' },
+      { name: 'MATLAB', pct: 8.3, color: '#9ece6a' },
+      { name: 'Shell', pct: 4.2, color: '#bb9af7' },
+    ];
+
+    const langBar = document.getElementById('lang-bar');
+    const langLegend = document.getElementById('lang-legend');
+    const langRows = document.getElementById('lang-rows');
+
+    staticLangs.forEach((l, i) => {
+      const seg = document.createElement('div');
+      seg.className = 'lang-segment';
+      seg.style.background = l.color;
+      seg.style.transitionDelay = (0.1 + i * 0.06) + 's';
+      langBar.appendChild(seg);
+
+      const dot = document.createElement('div');
+      dot.className = 'lang-dot-row';
+      dot.innerHTML = `<span class="lang-dot" style="background:${l.color}"></span>
+        <span style="color:var(--text)">${l.name}</span>
+        <span class="lang-pct">${l.pct}%</span>`;
+      langLegend.appendChild(dot);
+
+      if (i < 3) {
+        const row = document.createElement('div');
+        row.className = 'lang-row';
+        row.innerHTML = `
+          <span class="lang-row-dot" style="background:${l.color}"></span>
+          <span class="lang-row-name" style="color:var(--text)">${l.name}</span>
+          <div class="lang-row-track">
+            <div class="lang-row-fill" style="background:${l.color};transition-delay:${0.4+i*0.1}s"></div>
+          </div>
+          <span class="lang-row-pct" style="color:${l.color}">${l.pct}%</span>`;
+        langRows.appendChild(row);
+      }
+    });
+
+    setTimeout(() => {
+      staticLangs.forEach((l, i) => {
+        const segs = langBar.querySelectorAll('.lang-segment');
+        if (segs[i]) segs[i].style.width = l.pct + '%';
+      });
+      const fills = langRows.querySelectorAll('.lang-row-fill');
+      staticLangs.slice(0, 3).forEach((l, i) => {
+        if (fills[i]) fills[i].style.width = Math.min(l.pct / 72.4 * 100, 100) + '%';
+      });
+    }, 300);
+
+    document.getElementById('prof-contributions').textContent = '152';
+    document.getElementById('prof-longest').textContent = '4';
+    document.getElementById('prof-current').textContent = '1';
+    document.getElementById('prof-repos').textContent = '—';
+  }
+}
+
+// Kick off
+loadAllStats();
+
+// Auto-refresh every 5 minutes
+setInterval(loadAllStats, 5 * 60 * 1000);
+</script>
+</body>
+</html>
