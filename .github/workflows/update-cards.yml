@@ -1,0 +1,175 @@
+name: Update GitHub Stat Cards
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # runs every day at midnight UTC
+  workflow_dispatch:        # lets you trigger it manually from GitHub UI
+  push:
+    branches: [main]
+
+jobs:
+  update-cards:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch GitHub stats and update SVG cards
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: mokshan-123
+        run: |
+          # ── Fetch contribution data via GitHub GraphQL API ──────────────
+          RESPONSE=$(curl -s -H "Authorization: bearer $GH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -X POST https://api.github.com/graphql \
+            -d '{
+              "query": "{ user(login: \"'$USERNAME'\") { contributionsCollection { totalCommitContributions totalPullRequestContributions contributionCalendar { totalContributions weeks { contributionDays { contributionCount date } } } } repositories(first: 100, ownerAffiliations: OWNER) { totalCount nodes { stargazerCount primaryLanguage { name color } } } } }"
+            }')
+
+          echo "GraphQL response received"
+
+          # ── Parse values ─────────────────────────────────────────────────
+          TOTAL=$(echo $RESPONSE | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          print(d['data']['user']['contributionsCollection']['contributionCalendar']['totalContributions'])
+          ")
+
+          COMMITS=$(echo $RESPONSE | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          print(d['data']['user']['contributionsCollection']['totalCommitContributions'])
+          ")
+
+          PRS=$(echo $RESPONSE | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          print(d['data']['user']['contributionsCollection']['totalPullRequestContributions'])
+          ")
+
+          STARS=$(echo $RESPONSE | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          repos = d['data']['user']['repositories']['nodes']
+          print(sum(r['stargazerCount'] for r in repos))
+          ")
+
+          REPOS=$(echo $RESPONSE | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          print(d['data']['user']['repositories']['totalCount'])
+          ")
+
+          # ── Calculate streak ──────────────────────────────────────────────
+          python3 << 'PYEOF'
+          import json, os, subprocess
+
+          result = subprocess.run(
+            ['bash', '-c', 'echo "$RESPONSE"'],
+            capture_output=True, text=True, env=os.environ
+          )
+          data = json.loads(result.stdout)
+          weeks = data['data']['user']['contributionsCollection']['contributionCalendar']['weeks']
+
+          days = []
+          for w in weeks:
+            for d in w['contributionDays']:
+              days.append((d['date'], d['contributionCount']))
+
+          days.sort(key=lambda x: x[0])
+
+          # current streak (from today backwards)
+          current = 0
+          for date, count in reversed(days):
+            if count > 0:
+              current += 1
+            else:
+              break
+
+          # longest streak
+          longest = 0
+          streak = 0
+          longest_start = ''
+          longest_end = ''
+          tmp_start = ''
+          for date, count in days:
+            if count > 0:
+              if streak == 0:
+                tmp_start = date
+              streak += 1
+              if streak > longest:
+                longest = streak
+                longest_start = tmp_start
+                longest_end = date
+            else:
+              streak = 0
+
+          with open('/tmp/streak_data.env', 'w') as f:
+            f.write(f"CURRENT_STREAK={current}\n")
+            f.write(f"LONGEST_STREAK={longest}\n")
+            f.write(f"STREAK_START={longest_start}\n")
+            f.write(f"STREAK_END={longest_end}\n")
+
+          print(f"Current streak: {current}, Longest: {longest} ({longest_start} to {longest_end})")
+          PYEOF
+
+          source /tmp/streak_data.env
+
+          echo "Total=$TOTAL Commits=$COMMITS PRs=$PRS Stars=$STARS Repos=$REPOS"
+          echo "CurrentStreak=$CURRENT_STREAK LongestStreak=$LONGEST_STREAK"
+
+          # ── Update card-stats.svg ─────────────────────────────────────────
+          # Commit bar width: max 240px, scale to COMMITS (assume 500 max)
+          COMMIT_W=$(python3 -c "print(min(int(${COMMITS:-0} * 240 / 500), 240))")
+          PR_W=$(python3 -c "print(min(int(${PRS:-0} * 240 / 50), 240))")
+          STAR_W=$(python3 -c "print(min(int(${STARS:-0} * 240 / 50), 240))")
+          REPO_W=$(python3 -c "print(min(int(${REPOS:-0} * 240 / 30), 240))")
+
+          sed -i \
+            -e "s|font-size=\"36\" font-weight=\"700\" fill=\"#7aa2f7\">[0-9]*</text>|font-size=\"36\" font-weight=\"700\" fill=\"#7aa2f7\">${TOTAL}</text>|g" \
+            -e "s|fill=\"#7aa2f7\" text-anchor=\"start\">[0-9]*</text>|fill=\"#7aa2f7\" text-anchor=\"start\">${COMMITS}</text>|g" \
+            -e "s|fill=\"#bb9af7\" text-anchor=\"start\">[0-9]*</text>|fill=\"#bb9af7\" text-anchor=\"start\">${PRS}</text>|g" \
+            -e "s|fill=\"#e0af68\" text-anchor=\"start\">[0-9]*</text>|fill=\"#e0af68\" text-anchor=\"start\">${STARS}</text>|g" \
+            assets/cards/card-stats.svg
+
+          # ── Update card-streak.svg ────────────────────────────────────────
+          # Format streak dates nicely
+          FMT_START=$(python3 -c "
+          from datetime import datetime
+          try:
+            d = datetime.strptime('$STREAK_START', '%Y-%m-%d')
+            print(d.strftime('%b %-d'))
+          except: print('$STREAK_START')
+          ")
+          FMT_END=$(python3 -c "
+          from datetime import datetime
+          try:
+            d = datetime.strptime('$STREAK_END', '%Y-%m-%d')
+            print(d.strftime('%b %-d'))
+          except: print('$STREAK_END')
+          ")
+
+          sed -i \
+            -e "s|fill=\"#7dcfff\" text-anchor=\"middle\">[0-9]*</text>|fill=\"#7dcfff\" text-anchor=\"middle\">${CURRENT_STREAK}</text>|" \
+            -e "s|fill=\"#7aa2f7\" text-anchor=\"middle\">[0-9]*</text>|fill=\"#7aa2f7\" text-anchor=\"middle\">${TOTAL}</text>|" \
+            -e "s|fill=\"#e0af68\" text-anchor=\"middle\">[0-9]*</text>|fill=\"#e0af68\" text-anchor=\"middle\">${LONGEST_STREAK}</text>|" \
+            assets/cards/card-streak.svg
+
+          # ── Update card-profile.svg ───────────────────────────────────────
+          sed -i \
+            -e "s|fill=\"#7aa2f7\" text-anchor=\"middle\">[0-9]*</text>.*Contributions|fill=\"#7aa2f7\" text-anchor=\"middle\">${TOTAL}</text>|" \
+            assets/cards/card-profile.svg
+
+          echo "SVG cards updated successfully"
+
+      - name: Commit updated cards
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add assets/cards/
+          git diff --staged --quiet || git commit -m "chore: auto-update stat cards [skip ci]"
+          git push
